@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>webLab3</title>
+    <h:outputStylesheet library="styles" name="styles.css"/>
+    <h:outputScript library="scriptonit" name="drawing.js"/>
+    <h:outputScript library="scriptonit" name="jquery-3.3.1.min.js"/>
+    <h:outputScript library="styles" name="fonts/lib.p5/p5.min.js"/>
+</h:head>
+
+<h:body>
+    <div id="header" class="head">
+        <h1>Dashkova Maria / Yakovleva Tatiana | P3211 | 8318 </h1>
+        <h2 id="title">Determine hit point on the coordinate plane</h2>
+    </div>
+
+    <!--Проверка попадания точки на график<br/>-->
+
+    <div id="sketch-holder"> </div>
+
+    <div>
+        <h:form style="position: absolute; left: 540px; top: 220px;">
+
+            <div>
+                <p/><h:outputLabel value="Введите значение X (-3;5): "/>
+                <h:inputText id="name" value="#{mainBean.y}"
+                             required="true" converterMessage="Некорректное значение" size="7"
+                             maxlength="5" validatorMessage="Не входит в заданные границы">
+                    <f:validateDoubleRange minimum="-3" maximum="5"/>
+                </h:inputText>
+                <h:message id="y_message" for="name" style="color: red" autoupdate="true"/>
+            </div>
+
+            <div>
+                <p/><h:outputLabel value="Введите значение Y: "/>
+                <h:commandButton value="-4" styleClass="y1" onclick="tapY1();">
+                    <f:ajax execute="@form" render="name_msg"/>
+                    <f:setPropertyActionListener value="-4" target="#{mainBean.y}"/>
+                </h:commandButton>
+                <h:commandButton value="-3" styleClass="y2" onclick="tapY2();">
+                    <f:ajax execute="@form" render="name_msg"/>
+                    <f:setPropertyActionListener value="-3" target="#{mainBean.y}"/>
+                </h:commandButton>
+                <h:commandButton value="-2" styleClass="y3" onclick="tapY3();">
+                    <f:ajax execute="@form" render="name_msg"/>
+                    <f:setPropertyActionListener value="-2" target="#{mainBean.y}"/>
+                </h:commandButton>
+                <h:commandButton value="-1" styleClass="y4" onclick="tapY4();">
+                    <f:setPropertyActionListener value="-1" target="#{mainBean.y}"/>
+                    <f:ajax execute="@form" render="name_msg"/>
+                </h:commandButton>
+                <h:commandButton value="0" styleClass="y5" onclick="tapY5();">
+                    <f:setPropertyActionListener value="0" target="#{mainBean.y}"/>
+                    <f:ajax execute="@form" render="name_msg"/>
+                </h:commandButton>
+                <h:commandButton value="1" styleClass="y6" onclick="tapY6();">
+                    <f:setPropertyActionListener value="1" target="#{mainBean.y}"/>
+                    <f:ajax execute="@form" render="name_msg"/>
+                </h:commandButton>
+                <h:commandButton value="2" styleClass="y7" onclick="tapY7();">
+                    <f:setPropertyActionListener value="2" target="#{mainBean.y}"/>
+                    <f:ajax execute="@form" render="name_msg"/>
+                </h:commandButton>
+                <h:commandButton value="3" styleClass="y8" onclick="tapY8();">
+                    <f:setPropertyActionListener value="3" target="#{mainBean.y}"/>
+                    <f:ajax execute="@form" render="name_msg"/>
+                </h:commandButton>
+                <h:commandButton value="4" styleClass="y9" onclick="tapY9();">
+                    <f:setPropertyActionListener value="4" target="#{mainBean.y}"/>
+                    <f:ajax execute="@form" render="name_msg"/>
+                </h:commandButton>
+                <br/></div>
+
+            <div class="light entry">
+                <!--tapR1();-->
+                <p/><h:outputLabel value="Введите значение R: "/>
+                <h:commandButton value="1" styleClass="r1"
+                                 onclick="tapR1();
+                                 one('#{mainBean.gsonX}','#{mainBean.gsonY}');">
+                    <f:setPropertyActionListener value="1" target="#{mainBean.r}"/>
+                    <f:ajax execute="@form" render="name_msg"/>
+                </h:commandButton>
+                <h:commandButton value="2" styleClass="r2"
+                                 onclick="tapR2();
+                                 two('#{mainBean.gsonX}','#{mainBean.gsonY}')">
+                    <f:setPropertyActionListener value="2" target="#{mainBean.r}"/>
+                    <f:ajax execute="@form" render="name_msg"/>
+                </h:commandButton>
+                <h:commandButton value="3" styleClass="r3"
+                                 onclick="tapR3();
+                                 three('#{mainBean.gsonX}','#{mainBean.gsonY}')">
+                    <f:setPropertyActionListener value="3" target="#{mainBean.r}" />
+                    <f:ajax execute="@form" render="name_msg"/>
+                </h:commandButton>
+                <h:commandButton value="4" styleClass="r4"
+                                 onclick="tapR4();
+                                 four('#{mainBean.gsonX}','#{mainBean.gsonY}')">
+                    <f:setPropertyActionListener value="4" target="#{mainBean.r}"/>
+                    <f:ajax execute="@form" render="name_msg"/>
+                </h:commandButton>
+                <h:commandButton value="5" styleClass="r5"
+                                 onclick="tapR5();
+                                 five('#{mainBean.gsonX}','#{mainBean.gsonY}')">
+                    <f:setPropertyActionListener value="5" target="#{mainBean.r}"/>
+                    <f:ajax execute="@form" render="name_msg"/>
+                </h:commandButton>
+            </div>
+
+            <h:commandButton class="check" value="Check" action="#{mainBean.addResult}">
+                <f:ajax execute="@form" render="table y_message"/>
+            </h:commandButton>
+        </h:form>
+    </div>
+
+    <div style="position: absolute; left: 1000px; top: 220px;">
+        <h:panelGroup id="table" autoupdate="true">
+            <h:dataTable value="#{mainBean.results}" var="result">
+                <h:column>
+                    <f:facet name="header">X</f:facet>
+                    ${result.x}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Y</f:facet>
+                    ${result.y}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">R</f:facet>
+                    ${result.r}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Answer</f:facet>
+                    ${result.answer}
+                </h:column>
+            </h:dataTable>
+        </h:panelGroup>
+    </div>
+
+</h:body>
+
+</html>
